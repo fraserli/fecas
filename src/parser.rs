@@ -134,7 +134,13 @@ impl Neg for Expression {
         let operations = self
             .operations
             .into_iter()
-            .map(|(op, expr)| (op, Box::new(-*expr)))
+            .map(|(op, expr)| {
+                if op == Operator::Addition || op == Operator::Subtraction {
+                    (op, Box::new(-*expr))
+                } else {
+                    (op, expr)
+                }
+            })
             .collect();
 
         Expression { lhs, operations }
