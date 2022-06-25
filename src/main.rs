@@ -4,11 +4,11 @@ mod compute;
 mod lexer;
 mod parser;
 
+use fraction::{BigInt, DynaFraction};
 use lexer::Lexer;
 use parser::Parser;
 
 use anyhow::Result;
-use num::ToPrimitive;
 
 use std::io::Write;
 
@@ -30,12 +30,8 @@ fn main() -> Result<()> {
             match parser.parse() {
                 Ok(expr) => {
                     let result = expr.compute();
-                    let s = if result.is_integer() {
-                        result.to_string()
-                    } else {
-                        result.to_f64().unwrap().to_string()
-                    };
-                    println!("    = {s}")
+                    let a = DynaFraction::from(BigInt::from(10).pow(24));
+                    println!("    = {:.24}", (result * a.clone()).round() / a);
                 }
                 Err(error) => println!("    {:#}", error),
             }

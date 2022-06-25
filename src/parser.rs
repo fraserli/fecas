@@ -1,7 +1,7 @@
 use crate::lexer::{Lexer, Token, TokenType};
 
 use anyhow::{anyhow, bail, Context, Result};
-use num::BigRational;
+use fraction::DynaFraction;
 
 use std::iter::Peekable;
 use std::ops::Neg;
@@ -18,7 +18,7 @@ pub struct Expression {
 
 #[derive(Debug)]
 pub enum Atom {
-    Number(BigRational),
+    Number(DynaFraction<u128>),
     Expr(Box<Expression>),
 }
 
@@ -111,13 +111,13 @@ impl<'a> Parser<'a> {
         }
     }
 
-    fn parse_number(&mut self) -> Result<BigRational> {
+    fn parse_number(&mut self) -> Result<DynaFraction<u128>> {
         let token = self.eat(TokenType::Number)?;
-        let f: f64 = token
+        let number: DynaFraction<u128> = token
             .value
             .parse()
             .with_context(|| format!("invalid number literal: '{}'", token.value))?;
-        Ok(BigRational::from_float(f).unwrap())
+        Ok(number)
     }
 }
 

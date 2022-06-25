@@ -19,8 +19,24 @@ name = "fecas"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "fraction",
+]
+
+[[package]]
+name = "fraction"
+version = "0.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f4c42ca58f4e486c530d93c7f74ab469293b20d7f86b478ca9d702a2f95fed61"
+dependencies = [
+ "lazy_static",
  "num",
 ]
+
+[[package]]
+name = "lazy_static"
+version = "1.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
 name = "num"
